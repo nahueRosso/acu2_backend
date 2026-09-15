@@ -8,8 +8,9 @@ from fastapi.responses import StreamingResponse
 
 from .calculo import calcular_resultados
 from .export.excel_export import generar_excel
+from .materials.loader import cargar_materiales
 from .models.bands import THIRD_OCTAVE_BANDS
-from .schemas import CalculoResponse, PanelInput
+from .schemas import CalculoResponse, Material, PanelInput
 
 app = FastAPI(title="TP1 - Aislamiento a ruido aéreo (panel simple)")
 
@@ -28,6 +29,11 @@ app.add_middleware(
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/materiales", response_model=list[Material])
+def materiales() -> list[dict]:
+    return cargar_materiales()
 
 
 @app.post("/calcular", response_model=CalculoResponse)

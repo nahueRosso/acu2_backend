@@ -37,3 +37,12 @@ class CalculoResponse(BaseModel):
     frecuencias: list[float]
     resultados: ResultadosModelos
     entrada: PanelInput
+
+
+class Material(BaseModel):
+    id: int
+    material: str
+    densidad_kg_m3: float
+    modulo_young_Pa: float
+    factor_perdidas: float
+    modulo_poisson: float
