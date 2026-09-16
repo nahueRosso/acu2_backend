@@ -55,6 +55,12 @@ def generar_excel(datos: CalculoResponse) -> io.BytesIO:
         chart.y_axis.delete = False
         chart.x_axis.tickLblPos = "nextTo"
         chart.y_axis.tickLblPos = "nextTo"
+        # Además, openpyxl deja axPos="l" (izquierda) en los DOS ejes por
+        # default. Con el eje de categorías (frecuencia) también en "l",
+        # Excel no calcula bien el layout y termina sin dibujar los
+        # números de ninguno de los dos ejes. El de categorías va abajo.
+        chart.x_axis.axPos = "b"
+        chart.y_axis.axPos = "l"
 
         n_filas = len(datos.frecuencias)
         cats = Reference(ws_res, min_col=1, min_row=2, max_row=n_filas + 1)
