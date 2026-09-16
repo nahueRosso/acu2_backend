@@ -49,6 +49,13 @@ def generar_excel(datos: CalculoResponse) -> io.BytesIO:
         chart.y_axis.title = "R (dB)"
         chart.style = 2
 
+        # openpyxl no marca los ejes como visibles por default: sin esto,
+        # Excel los abre sin las marcas de escala (números) en X e Y.
+        chart.x_axis.delete = False
+        chart.y_axis.delete = False
+        chart.x_axis.tickLblPos = "nextTo"
+        chart.y_axis.tickLblPos = "nextTo"
+
         n_filas = len(datos.frecuencias)
         cats = Reference(ws_res, min_col=1, min_row=2, max_row=n_filas + 1)
         for idx, clave in enumerate(modelos_disponibles):
